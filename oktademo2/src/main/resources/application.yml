@@ -1,7 +1,7 @@
 server:
   port: 8080
   servlet:
-     context-path: /oktademo2
+     context-path: /oktademo
 
 logging:
   level:
@@ -10,15 +10,9 @@ logging:
     org.springframework.security: INFO
 #    org.springframework.boot.autoconfigure: DEBUG
 
-spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          okta:
-            client-id: {client-id}
-            client-secret: {client-secret}
-        provider:
-          okta:
-            issuer-uri: https://{url}.com/oauth2/default
-            client-name: Okta
+
+okta:
+  oauth2:
+    issuer: https://{url}.com/oauth2/default
+    client-id: {client-id}
+    client-secret: {client-secret}

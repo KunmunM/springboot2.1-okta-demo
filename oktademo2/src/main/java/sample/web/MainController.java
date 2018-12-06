@@ -19,6 +19,7 @@ import static org.springframework.security.oauth2.client.web.reactive.function.c
 
 import java.util.Map;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.ui.Model;
@@ -45,8 +46,13 @@ public class MainController {
 	public String test(Model model, @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
 		return "test";
 	}
-
+	  @GetMapping("/admin")
+	  @PreAuthorize("hasAuthority('Administrators')")
+	  public String admin(java.security.Principal user) {
+	    return "Hello, " + user.getName() + ". Would you like to play a game?";
+	  }
 	@GetMapping("/userinfo")
+	@PreAuthorize("hasAuthority('Administrators')")
 	public String userinfo(Model model, @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
 		String userInfoEndpointUri = authorizedClient.getClientRegistration()
 				.getProviderDetails().getUserInfoEndpoint().getUri();
